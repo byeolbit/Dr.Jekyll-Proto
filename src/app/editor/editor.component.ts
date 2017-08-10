@@ -1,4 +1,5 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,11 +7,15 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./editor.component.css']
 })
 
-export class EditorComponent {
+export class EditorComponent implements OnInit {
   @ViewChild('iframe') iframe: ElementRef;
   title = 'Hello Dr.Jekyll';
   iframeDoc;
   iframeCont;
+
+  constructor (private router: Router){};
+
+  ngOnInit(){};
 
   onLoad() {
     let doc = this.iframe.nativeElement.contentDocument || 

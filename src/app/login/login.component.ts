@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 import { User } from './user'
 
@@ -16,23 +17,32 @@ declare var electron: any;
 export class LoginComponent implements OnInit {
   errorMessage: string;
   result: Boolean;
-  constructor (private loginService: LoginService) {};
+
+  constructor (
+    private loginService: LoginService,
+    private router: Router
+  ) {};
 
   ngOnInit() { 
     electron.remote.getCurrentWindow().setSize(1000,500,true);
-    electron.ipcRenderer.send('wsize');
   };
 
   login(user:User) {
     this.loginService.requestLogin(user)
                      .then(r => {
                             this.result = this.returnResult(r);
-                            console.log(this.result);
+                            this.navigateToRepo(true);
                            },
                            error => this.errorMessage = <any>error);
   }
 
   private returnResult(data:{result:boolean}): Boolean {
     return data.result;
+  }
+
+  private navigateToRepo(result:Boolean) {
+    if (result) {
+      this.router.navigate(['/editor']);
+    }
   }
 }

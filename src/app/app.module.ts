@@ -4,38 +4,33 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 
 import { AppComponent } from './app.component'
+import { AppRoutingModlue } from './app-routing.module'
+
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
-//import { RepositoryComponent } from './repository/repository.component';
+import { RepositoryComponent } from './repository/repository.component';
 import { EditorComponent } from './editor/editor.component';
 import { SafePipe } from './editor/safe.pipe';
 
-import { RouterModule, Routes } from '@angular/router';
-
-const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent },
-  
-  { path: 'editor', component: EditorComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full'}
-]
+import { Router } from '@angular/router';
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    JsonpModule,
+    AppRoutingModlue
+  ],
   declarations: [
     AppComponent,
     EditorComponent,
     LoginComponent,
     SafePipe,
   ],
-  imports: [
-    RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true }
-    ),
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    JsonpModule
-  ],
-  bootstrap: [LoginComponent]
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(router:Router) {  
+  }
+}
