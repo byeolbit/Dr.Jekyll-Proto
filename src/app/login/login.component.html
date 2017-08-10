@@ -1,0 +1,7 @@
+<div class="input-field">
+    <input #userName id="name" type="text">
+</div>
+<div class="input-field">
+    <input #userPassword id="password" type="password">
+</div>
+<button (click)="login(userName.value, userPassword.value);" class="btn" type="submit" name="action">login</button>

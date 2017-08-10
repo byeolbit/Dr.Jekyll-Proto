@@ -1,0 +1,13 @@
+<h1>
+  Live-Editor test
+</h1>
+<div class="live-editor">
+  <div class="le-toolbox">
+    <button id="le-bold" (click)="bold()">bold</button>
+    <button id="le-h1" (click)="heading1()">h1</button>
+    <button id="output" (click)="makeBodyToJson()">output</button>
+  </div>
+  <div class="le-wrapper">
+    <iframe #iframe class="le-iframe" width="100%" height="700" [src]="'http://localhost:4000/jekyll/update/2017/04/28/welcome-to-jekyll.html'" (load)="onLoad()"></iframe>
+  </div>
+</div>
