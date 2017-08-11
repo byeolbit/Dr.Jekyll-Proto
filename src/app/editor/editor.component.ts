@@ -13,7 +13,12 @@ export class EditorComponent implements OnInit {
   iframeDoc;
   iframeCont;
 
-  constructor (private router: Router){};
+  toolboxL = 'assets/images/toolbox_l.png';
+  toolboxR = 'assets/images/toolbox_r.png';
+  toolbox_bold = 'assets/images/bold.png';
+  toolbox_heading = 'assets/images/heading.png';
+
+  constructor ( private router: Router ){};
 
   ngOnInit(){};
 
@@ -32,12 +37,8 @@ export class EditorComponent implements OnInit {
     this.iframeDoc.execCommand('formatBlock',false,'<h1>');
   }
   makeBodyToJson() {
-    let bodyCont = [].map.call(this.iframeCont.children,(node)=>{
-      let b = node.outerHTML;
-      if (b[1].toLowerCase()==='h') {
-        b = '<p>'+b+'</p>';
-      }
-      return b;
+    let bodyCont = [].map.call(this.iframeCont.children, node =>{
+      return node.outerHTML;
     }).join('');
     let json = JSON.stringify({body : bodyCont});
     console.log(json);
