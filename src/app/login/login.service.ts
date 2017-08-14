@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class LoginService {
-  private serverUrl: string = 'http://localhost:4300/login';
+  private serverUrl: string = 'http://localhost:3000/login';
 
   constructor (private http: Http) {}
 

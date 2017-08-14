@@ -1,14 +1,2 @@
-<h1>
-  Live-Editor test
-</h1>
-<div class="live-editor">
-  <div class="le-toolbox">
-    <img class="button" id="le-toolbox-l" [src]="toolboxL">
-    <img class="button" id="le-bold" [src]="toolbox_bold" (click)="bold()">
-    <img class="button" id="le-h1" [src]="toolbox_heading" (click)="heading1()">
-    <img class="button" id="le-toolbox-r" [src]="toolboxR">
-  </div>
-  <div class="le-wrapper">
-    <iframe #iframe class="le-iframe" width="100%" height="700" [src]="'http://localhost:4000/jekyll/update/2017/04/28/welcome-to-jekyll.html' | safe" (load)="onLoad()"></iframe>
-  </div>
-</div>
+<side-bar></side-bar>
+<live-editor></live-editor>
