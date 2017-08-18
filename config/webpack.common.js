@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var helpers = require('./helpers');
 
 module.exports = {
@@ -14,7 +15,7 @@ module.exports = {
     extensions: ['.ts', '.js']
   },
 
-  target: 'electron',
+  target: 'electron-renderer',
 
   module: {
     rules: [
@@ -33,7 +34,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-        loader: 'file-loader?name=assets/[name].[hash].[ext]'
+        loader: 'file-loader?name=assets/images/[name].[hash].[ext]'
       },
       {
         test: /\.css$/,
@@ -63,7 +64,11 @@ module.exports = {
 
     new HtmlWebpackPlugin({
       template: 'src/index.html'
-    })
+    }),
+
+    new CopyWebpackPlugin([
+      {from: 'src/assets', to: 'assets' }
+    ])
   ]
 };
 
