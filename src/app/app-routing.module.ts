@@ -5,9 +5,9 @@ import { LoginComponent } from './login/login.component';
 import { RepositoryComponent } from './repository/repository.component';
 import { EditorComponent } from './editor/editor.component';
 
-
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'repository', component: RepositoryComponent},
   { path: 'editor', component: EditorComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full'}
 ]
@@ -17,7 +17,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       {
-        enableTracing: true
+        useHash: true
       }
     ),
   ],
@@ -29,4 +29,4 @@ const appRoutes: Routes = [
   ]
 })
 
-export class AppRoutingModlue {}
+export class AppRoutingModule {}

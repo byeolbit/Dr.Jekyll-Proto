@@ -2,17 +2,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
+import { Router } from '@angular/router';
 
 import { AppComponent } from './app.component'
-import { AppRoutingModlue } from './app-routing.module'
+import { AppRoutingModule } from './app-routing.module'
 
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
 import { RepositoryComponent } from './repository/repository.component';
 import { EditorComponent } from './editor/editor.component';
-import { SafePipe } from './editor/safe.pipe';
+import { SideBarComponent } from './editor/sidebar/sidebar.component';
+import { FileBrowserComponent } from './editor/sidebar/file-browser/file-browser.component'
+import { LiveEditorComponent } from './editor/live-editor/live-editor.component';
 
-import { Router } from '@angular/router';
+import { TreeModule } from 'angular-tree-component';
+import { SafePipe } from './safe.pipe';
 
 @NgModule({
   imports: [
@@ -20,12 +24,17 @@ import { Router } from '@angular/router';
     FormsModule,
     HttpModule,
     JsonpModule,
-    AppRoutingModlue
+    AppRoutingModule,
+    TreeModule
   ],
   declarations: [
     AppComponent,
-    EditorComponent,
     LoginComponent,
+    RepositoryComponent,
+    EditorComponent,
+    SideBarComponent,
+    FileBrowserComponent,
+    LiveEditorComponent,
     SafePipe,
   ],
   bootstrap: [AppComponent]

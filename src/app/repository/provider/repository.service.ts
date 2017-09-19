@@ -1,28 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { User } from './user'
-
+import { Repository } from '../repository'
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class LoginService {
-  private serverUrl: string = 'http://59.27.101.61:3000/login';
+export class RepositoryService {
+  private serverUrl: string = 'http://59.27.101.61:3000/repository';
 
   constructor (private http: Http) {}
 
-  requestLogin (user:User): Promise<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.serverUrl, { 'repo_url':'https://github.com/boolsajo/PyGithub','repo_path':'test_clone' }, options)
-                    .toPromise()
-                    .then(this.extractData)
-                    .catch(this.handleError);
-  }
-
-  private extractData(res: Response) {
-    let body = res.json();
-    return body || {};
-  }
+  getRepositories(): Promise<Repository[]> {
+  return this.http.get(this.serverUrl)
+             .toPromise()
+             .then(response => response.json() as Repository[])
+             .catch(this.handleError);
+}
 
   private handleError (error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure

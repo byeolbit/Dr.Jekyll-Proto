@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'live-editor',
   templateUrl: './live-editor.component.html',
-  styleUrls: ['./live-editor.component.css']
+  styleUrls: ['./live-editor.component.scss']
 })
 
 export class LiveEditorComponent implements OnInit {
@@ -13,10 +13,25 @@ export class LiveEditorComponent implements OnInit {
   iframeDoc;
   iframeCont;
 
-  toolboxL = 'assets/images/toolbox_l.png';
-  toolboxR = 'assets/images/toolbox_r.png';
-  toolbox_bold = 'assets/images/bold.png';
-  toolbox_heading = 'assets/images/heading.png';
+  icon_editHeader = 'assets/images/icon/icon_editHeader.svg';
+  icon_ol = 'assets/images/icon/icon_ol.svg';
+  icon_ul = 'assets/images/icon/icon_ul.svg';
+  icon_bold = 'assets/images/icon/icon_bold.svg';
+  icon_heading = 'assets/images/icon/icon_heading.svg';
+  icon_table = 'assets/images/icon/icon_table.svg';
+  icon_deleteTable = 'assets/images/icon/icon_deleteTable.svg';
+  icon_add = 'assets/images/icon/icon_add.svg';
+  icon_image = 'assets/images/icon/icon_image.svg';
+  icon_link = 'assets/images/icon/icon_link.svg';
+  icon_quote = 'assets/images/icon/icon_quote.svg';
+  icon_code = 'assets/images/icon/icon_code.svg';
+  icon_checklist = 'assets/images/icon/icon_checklist.svg';
+  icon_ssl = 'assets/images/icon/icon_ssh.svg';
+  icon_information = 'assets/images/icon/icon_information.svg';
+  icon_emoji = 'assets/images/icon/icon_emoji.svg';
+  icon_strike = 'assets/images/icon/icon_strike.svg';
+  icon_metion = 'assets/images/icon/icon_mention.svg';
+
 
   constructor ( private router: Router ){};
 
@@ -27,8 +42,15 @@ export class LiveEditorComponent implements OnInit {
               this.iframe.nativeElement.contentWindow.document;
     this.iframeDoc = doc;
     let cont = <HTMLElement>doc.getElementsByClassName('post-content')[0];
-    this.iframeCont = cont;
-    cont.contentEditable = 'true';
+    
+    if (cont !== undefined) {
+      cont.contentEditable = 'true';
+    }
+
+    let links = doc.getElementsByTagName('a');
+    for (var index = 0; index < links.length; index++) {
+      links[index].removeAttribute('href');
+    }
   }
   bold() {
     this.iframeDoc.execCommand('bold',false, '');
