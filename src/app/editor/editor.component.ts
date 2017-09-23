@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { remote } from 'electron';
+
+import 'rxjs/add/operator/switchMap';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +20,10 @@ export class EditorComponent implements OnInit {
   icon_pull = 'assets/images/icon/icon_pull.svg';
   icon_branch = 'assets/images/icon/icon_branch.svg';
 
+  repositorySrc;
+
   constructor (
+    private route: ActivatedRoute,
     private router: Router
   ) {};
 
@@ -28,5 +34,7 @@ export class EditorComponent implements OnInit {
     win.setFullScreenable(true);
     win.setResizable(true);
     win.setVibrancy('dark');
-  };
+
+    this.repositorySrc = this.route.snapshot.params.src;
+  }
 }

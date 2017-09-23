@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, NgModule, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, NgModule, ViewChild, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { TreeComponent } from 'angular-tree-component';
 import * as fs from 'fs';
@@ -11,6 +11,8 @@ import * as path from 'path';
 })
 
 export class FileBrowserComponent implements OnInit {
+  @Input() dir: string;
+  
   errorMessage: string;
   result: Boolean;
   nodes = [];
@@ -30,7 +32,8 @@ export class FileBrowserComponent implements OnInit {
   private tree: TreeComponent;
 
   ngOnInit(){
-    this.makeDirectoryTree('./src/jekyll/bundle-site', (err, res)=>{
+    console.log(this.dir);
+    this.makeDirectoryTree(this.dir, (err, res)=>{
       console.log(res);
       this.nodes = res;
       this.tree.treeModel.update();
@@ -42,7 +45,7 @@ export class FileBrowserComponent implements OnInit {
     //this.nodes = [this.tree];
   }
 
-  private makeDirectoryTree = (dir:string, funcDone) => {
+  private makeDirectoryTree = (dir, funcDone) => {
     let res = [];
 
     fs.readdir(dir, (err,files)=> {
