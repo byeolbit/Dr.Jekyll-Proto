@@ -32,24 +32,16 @@ export class FileBrowserComponent implements OnInit {
   private tree: TreeComponent;
 
   ngOnInit(){
-    console.log(this.dir);
     this.makeDirectoryTree(this.dir, (err, res)=>{
-      console.log(res);
       this.nodes = res;
       this.tree.treeModel.update();
-      //this.nodes = [JSON.stringify(res)];
     });
   };
-
-  ngAfterViewInit(){
-    //this.nodes = [this.tree];
-  }
 
   private makeDirectoryTree = (dir, funcDone) => {
     let res = [];
 
     fs.readdir(dir, (err,files)=> {
-      'use strict';
       if (err) throw err;
 
       let isEmpty = files.length;
@@ -61,7 +53,9 @@ export class FileBrowserComponent implements OnInit {
       for (let file of files) {
         file = path.resolve(dir, file);
         fs.stat(file, (err, stats)=> {
-          if (stats && stats.isDirectory()) {
+          if (stats && 
+              stats.isDirectory() && 
+              path.basename(file)[0]!=='.') {
             this.makeDirectoryTree(file, (err, result)=>{
               res.push({
                 id: this.index++,
@@ -74,7 +68,7 @@ export class FileBrowserComponent implements OnInit {
             });
           } else {
             let basename = path.basename(file);
-            let MD_FORMAT = '\\.(markdown|md)$';
+            let MD_FORMAT = '\\.(MARKDOWN|MD|markdown|md)$';
             if(new RegExp(MD_FORMAT,'i').test(basename)){
               res.push({
                 id: this.index++,
@@ -90,17 +84,17 @@ export class FileBrowserComponent implements OnInit {
     });
   };
 
-  private makeNode(stats) {
-    if(stats.isDirectory()) {
-      //return this.makeElements();
-    } else {
-      //return this.makeElements();
-    }
+  /**
+   * TODO : Generate link to rendered html of md file
+   * @param file 
+   */
+  private generateUrl(file) {
   }
 
-  private makeElement( content:string ) {
-    let tmpContainer = document.createElement('div');
-    tmpContainer.innerText = content;
-    return tmpContainer;
+  /**
+   * TODO : Parser to parse header of md file
+   * @param file
+   */
+  private mdHeaderParser(file) {
   }
 }
