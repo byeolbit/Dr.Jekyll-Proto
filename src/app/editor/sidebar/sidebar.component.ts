@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 
 export class SideBarComponent implements OnInit {
   @Input() dir;
+  @Output() filePath = new EventEmitter();
   errorMessage: string;
   result: Boolean;
 
@@ -18,6 +19,10 @@ export class SideBarComponent implements OnInit {
   constructor (
     private router: Router
   ) {};
+
+  onUpdate(docInfo) {
+    this.filePath.emit(docInfo);
+  }
 
   ngOnInit(){
   };

@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { remote } from 'electron';
-
-import 'rxjs/add/operator/switchMap';
-import { Observable } from 'rxjs/Observable';
-
+ 
 @Component({
   selector: 'app-root',
   templateUrl: './editor.component.html',
@@ -12,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 })
 
 export class EditorComponent implements OnInit {
+  mdDocInfo: string;
   errorMessage: string;
   result: Boolean;
 
@@ -36,5 +34,9 @@ export class EditorComponent implements OnInit {
     win.setVibrancy('dark');
 
     this.repositorySrc = this.route.snapshot.params.src;
+  }
+
+  updateLink(docInfo){ 
+    this.mdDocInfo = docInfo;
   }
 }
