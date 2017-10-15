@@ -1,18 +1,27 @@
-import { Component, ViewChild, ElementRef, OnInit, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef,
+         OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { GitService } from './provider/git.service';
+import { JekyllService } from '../../jekyll.service';
+import { Subscription } from 'rxjs/Subscription';
+
 
 @Component({
   selector: 'live-editor',
   templateUrl: './live-editor.component.html',
-  styleUrls: ['./live-editor.component.scss']
+  styleUrls: ['./live-editor.component.scss'],
+  providers: [ GitService ]
 })
 
-export class LiveEditorComponent implements OnInit {
+export class LiveEditorComponent implements OnInit, OnChanges {
   @ViewChild('iframe') iframe: ElementRef;
-  @Input() mdDoc;
+  @Input() mdDoc = {header: '', path:'', file:''};
   @Input() dir;
+  @Input() jekyllProcess;
+  private subscription: Subscription;
   
   title = 'Hello Dr.Jekyll';
+  pagePath = '';
   iframeDoc;
   iframeCont;
 
@@ -33,22 +42,36 @@ export class LiveEditorComponent implements OnInit {
   icon_information = 'assets/images/icon/icon_information.svg';
   icon_emoji = 'assets/images/icon/icon_emoji.svg';
   icon_strike = 'assets/images/icon/icon_strike.svg';
-  icon_metion = 'assets/images/icon/icon_mention.svg';
+  icon_mention = 'assets/images/icon/icon_mention.svg';
 
 
-  constructor ( private router: Router ){};
+  constructor ( private router: Router,
+                private gitService: GitService,
+                private jekyllService: JekyllService ){
+                 this.subscription = this.jekyllService.getJekyllProcess().subscribe(ps=>{console.log(ps); this.jekyllProcess = ps;});
+                };
 
   ngOnInit(){};
+
+  ngOnChanges(changes: SimpleChanges){
+    if(changes['mdDoc']){
+      if(this.mdDoc !== undefined){
+        this.pagePath = this.mdDoc.path;
+      }
+    }
+  }
 
   onLoad() {
     let doc = this.iframe.nativeElement.contentDocument || 
               this.iframe.nativeElement.contentWindow.document;
     this.iframeDoc = doc;
     let cont = <HTMLElement>doc.getElementsByClassName('post-content')[0];
-    
+    this.iframeCont = cont;
     let baseHref = <HTMLElement>doc.createElement('base');
     baseHref.setAttribute('href',this.dir);
-    doc.body.appendChild(baseHref);
+    doc.head.appendChild(baseHref);
+
+    console.log('dir='+this.dir);
     if (cont !== undefined) {
       cont.contentEditable = 'true';
     }
@@ -58,17 +81,26 @@ export class LiveEditorComponent implements OnInit {
       links[index].removeAttribute('href');
     }
   }
-  bold() {
+  private bold() {
     this.iframeDoc.execCommand('bold',false, '');
   }
-  heading1() {
+  private heading1() {
     this.iframeDoc.execCommand('formatBlock',false,'<h1>');
   }
-  makeBodyToJson() {
+  private makeBodyToJson() {
     let bodyCont = [].map.call(this.iframeCont.children, node =>{
       return node.outerHTML;
     }).join('');
-    let json = JSON.stringify({body : bodyCont});
-    console.log(json);
+    return bodyCont;
+  }
+
+  save() {
+    this.jekyllProcess = this.jekyllService.getJekyll();
+    let body = this.makeBodyToJson();
+    let filePath = this.mdDoc.file.substring(this.dir.length+1);
+    this.gitService.saveRequest(this.mdDoc.file, this.dir, this.mdDoc.header, body, this.jekyllProcess)
+                   .then(result=>{
+                     this.iframeDoc.location.reload(true);
+                   })
   }
 }

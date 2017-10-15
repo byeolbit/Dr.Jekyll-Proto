@@ -36,6 +36,7 @@ export class FileBrowserComponent implements OnInit {
         click: (tree, node, $event) => {
           this.fileLink.emit({
             path: node.data.link,
+            file: node.data.file,
             header: node.data.header
           });
         }
@@ -98,11 +99,13 @@ export class FileBrowserComponent implements OnInit {
             let MD_FORMAT = '\\.(MARKDOWN|MD|markdown|md)$';
             if(new RegExp(MD_FORMAT,'i').test(basename)){
               let header = this.mdHeaderParser(file);
+              let permalink = this.generateUrl(basename, header);
               res.push({
                 id: this.index++,
                 name: basename,
                 type: 'file',
-                link: this.generateUrl(basename, header),
+                link: this.url + permalink,
+                file: file,
                 header: header
               });
             }
@@ -139,7 +142,7 @@ export class FileBrowserComponent implements OnInit {
      } else {
       permalink = this.getPermalink(file, header, permalinkVariable.value);
     }
-    return this.dir+'/_site'+permalink;
+    return permalink;
   }
 
   /**
