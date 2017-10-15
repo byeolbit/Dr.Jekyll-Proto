@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="contents-container">
-      <sidebar></sidebar>
-      <live-editor></live-editor>
+      <sidebar [dir]="repositorySrc"  (filePath)="updateLink($event)"></sidebar>
+      <live-editor [dir]="repositorySrc" [mdDoc]="mdDocInfo"></live-editor>
   </div>
 </div>

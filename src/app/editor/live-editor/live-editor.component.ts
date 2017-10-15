@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
 
 export class LiveEditorComponent implements OnInit {
   @ViewChild('iframe') iframe: ElementRef;
+  @Input() mdDoc;
+  @Input() dir;
+  
   title = 'Hello Dr.Jekyll';
   iframeDoc;
   iframeCont;
@@ -43,6 +46,9 @@ export class LiveEditorComponent implements OnInit {
     this.iframeDoc = doc;
     let cont = <HTMLElement>doc.getElementsByClassName('post-content')[0];
     
+    let baseHref = <HTMLElement>doc.createElement('base');
+    baseHref.setAttribute('href',this.dir);
+    doc.body.appendChild(baseHref);
     if (cont !== undefined) {
       cont.contentEditable = 'true';
     }

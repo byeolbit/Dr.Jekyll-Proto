@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { remote } from 'electron';
-
+ 
 @Component({
   selector: 'app-root',
   templateUrl: './editor.component.html',
@@ -9,6 +9,7 @@ import { remote } from 'electron';
 })
 
 export class EditorComponent implements OnInit {
+  mdDocInfo: string;
   errorMessage: string;
   result: Boolean;
 
@@ -17,7 +18,10 @@ export class EditorComponent implements OnInit {
   icon_pull = 'assets/images/icon/icon_pull.svg';
   icon_branch = 'assets/images/icon/icon_branch.svg';
 
+  repositorySrc;
+
   constructor (
+    private route: ActivatedRoute,
     private router: Router
   ) {};
 
@@ -28,5 +32,11 @@ export class EditorComponent implements OnInit {
     win.setFullScreenable(true);
     win.setResizable(true);
     win.setVibrancy('dark');
-  };
+
+    this.repositorySrc = this.route.snapshot.params.src;
+  }
+
+  updateLink(docInfo){ 
+    this.mdDocInfo = docInfo;
+  }
 }

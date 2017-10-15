@@ -9,7 +9,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'repository', component: RepositoryComponent},
   { path: 'editor', component: EditorComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full'}
+  { path: '', redirectTo: '/repository', pathMatch: 'full'}
 ]
 
 @NgModule({
@@ -17,6 +17,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       {
+        enableTracing: true,
         useHash: true
       }
     ),

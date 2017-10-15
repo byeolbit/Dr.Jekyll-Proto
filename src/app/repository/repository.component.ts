@@ -16,6 +16,7 @@ import 'rxjs/add/operator/toPromise';
 export class RepositoryComponent implements OnInit{
   repoList: Repository[];
   icon_repo = 'assets/images/icon/icon_repo.png';
+  repositorySrc;
 
   constructor (
     private router: Router,
@@ -35,13 +36,19 @@ export class RepositoryComponent implements OnInit{
   }
 
   loadRepository() {
+    this.selectDirectory();
     this.navigateToEditor(true);
   }
 
   private navigateToEditor(result:Boolean) {
     if (result) {
-      this.router.navigate(['/editor']);
+      console.log(this.repositorySrc);
+      this.router.navigate(['/editor',{'src' : this.repositorySrc }]);
     }
   }
 
+  private selectDirectory() {
+    let dialog = remote.dialog;
+    this.repositorySrc = dialog.showOpenDialog({properties: ['openDirectory']}).toString();
+  }
 }
