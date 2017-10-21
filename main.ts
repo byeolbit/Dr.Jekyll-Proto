@@ -23,8 +23,7 @@ function createWindow() {
     width: 620,
     height: 480,
     titleBarStyle: 'hidden-inset',
-    resizable: false,
-    vibrancy: 'light'
+    resizable: false
   });
 
   // and load the index.html of the app.

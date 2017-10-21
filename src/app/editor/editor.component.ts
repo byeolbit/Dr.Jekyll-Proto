@@ -3,15 +3,16 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { remote } from 'electron';
  
 @Component({
-  selector: 'app-root',
+  selector: 'editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss']
 })
 
 export class EditorComponent implements OnInit {
-  mdDocInfo: string;
+  mdDocInfo;
   errorMessage: string;
   result: Boolean;
+  @Input() ps;
 
   icon_commit = 'assets/images/icon/icon_commit.svg';
   icon_push = 'assets/images/icon/icon_push.svg';
@@ -31,10 +32,10 @@ export class EditorComponent implements OnInit {
     win.setMaximizable(true);
     win.setFullScreenable(true);
     win.setResizable(true);
-    win.setVibrancy('dark');
-
     this.repositorySrc = this.route.snapshot.params.src;
   }
+
+
 
   updateLink(docInfo){ 
     this.mdDocInfo = docInfo;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 import { User } from './user'
@@ -7,13 +7,15 @@ import { remote } from 'electron';
 import 'rxjs/add/operator/toPromise';
 
 @Component({
-  selector: 'app-root',
+  selector: 'login',
   templateUrl: './login.component.html',
   providers: [ LoginService ],
   styleUrls: ['./login.component.scss']
 })
 
 export class LoginComponent implements OnInit {
+  @Input() ps;
+  
   errorMessage: string;
   result: Boolean;
 

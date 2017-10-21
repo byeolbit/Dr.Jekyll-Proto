@@ -5,7 +5,7 @@
     <div class="le-tool-group-wrapper">
       <div class="le-tool-group">
         <div class="le-tool-icon">
-          <div class="icon-wrapper"></div>
+          <div class="icon-wrapper" (click)="save()"></div>
           <img [src]="icon_editHeader">
         </div>
       </div>
@@ -80,10 +80,10 @@
         </div>
         <div class="le-tool-icon">
           <div class="icon-wrapper"></div>
-          <img [src]="icon_metion">
+          <img [src]="icon_mention">
         </div>
       </div>
     </div>
   </div>
-  <iframe #iframe class="le-iframe" width="100%" [src]="mdDoc.path | safe" (load)="onLoad()"></iframe>
+  <iframe #iframe class="le-iframe" width="100%" [src]="pagePath | safe" (load)="onLoad()"></iframe>
 </div>

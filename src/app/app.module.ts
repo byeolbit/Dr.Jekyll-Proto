@@ -15,6 +15,8 @@ import { SideBarComponent } from './editor/sidebar/sidebar.component';
 import { FileBrowserComponent } from './editor/sidebar/file-browser/file-browser.component'
 import { LiveEditorComponent } from './editor/live-editor/live-editor.component';
 
+import { JekyllService } from './jekyll.service';
+
 import { TreeModule } from 'angular-tree-component';
 import { SafePipe } from './safe.pipe';
 
@@ -36,6 +38,9 @@ import { SafePipe } from './safe.pipe';
     FileBrowserComponent,
     LiveEditorComponent,
     SafePipe,
+  ],
+  providers: [
+    JekyllService
   ],
   bootstrap: [AppComponent]
 })
