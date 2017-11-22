@@ -11,11 +11,11 @@
       </div>
       <div class="le-tool-group">
         <div class="le-tool-icon">
-          <div class="icon-wrapper"></div>
+          <div class="icon-wrapper" (click)="orderedList()"></div>
           <img [src]="icon_ol">
         </div>
         <div class="le-tool-icon">
-          <div class="icon-wrapper"></div>
+          <div class="icon-wrapper" (click)="unorderedList()"></div>
           <img [src]="icon_ul">
         </div>
         <div class="le-tool-icon">
@@ -23,7 +23,7 @@
           <img [src]="icon_bold">
         </div>
         <div class="le-tool-icon">
-          <div class="icon-wrapper" (click)="heading1()"></div>
+          <div class="icon-wrapper" (click)="heading()"></div>
           <img [src]="icon_heading">
         </div>
       </div>

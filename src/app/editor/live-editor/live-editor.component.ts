@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 export class LiveEditorComponent implements OnInit, OnChanges {
   @ViewChild('iframe') iframe: ElementRef;
-  @Input() mdDoc = {header: '', path:'', file:''};
+  @Input() mdDoc = {header: [], path:'', file:''};
   @Input() dir;
   @Input() jekyllProcess;
   private subscription: Subscription;
@@ -44,6 +44,7 @@ export class LiveEditorComponent implements OnInit, OnChanges {
   icon_strike = 'assets/images/icon/icon_strike.svg';
   icon_mention = 'assets/images/icon/icon_mention.svg';
 
+  headingCount = 0;
 
   constructor ( private router: Router,
                 private gitService: GitService,
@@ -84,9 +85,21 @@ export class LiveEditorComponent implements OnInit, OnChanges {
   private bold() {
     this.iframeDoc.execCommand('bold',false, '');
   }
-  private heading1() {
-    this.iframeDoc.execCommand('formatBlock',false,'<h1>');
+
+  private heading() {
+    this.headingCount = 1;
+    this.iframeDoc.execCommand('formatBlock',false,'<h'+this.headingCount+'>');
+
   }
+
+  private orderedList() {
+    this.iframeDoc.execCommand('insertOrderedList',false);
+  }
+
+  private unorderedList() {
+    this.iframeDoc.execCommand('insertUnorderedList',false);
+  }
+
   private makeBodyToJson() {
     let bodyCont = [].map.call(this.iframeCont.children, node =>{
       return node.outerHTML;
@@ -98,7 +111,12 @@ export class LiveEditorComponent implements OnInit, OnChanges {
     this.jekyllProcess = this.jekyllService.getJekyll();
     let body = this.makeBodyToJson();
     let filePath = this.mdDoc.file.substring(this.dir.length+1);
-    this.gitService.saveRequest(this.mdDoc.file, this.dir, this.mdDoc.header, body, this.jekyllProcess)
+    let header = {};
+    for (let i = 0; i< this.mdDoc.header.length; i++) {
+      header[this.mdDoc.header[i].key] = this.mdDoc.header[i].value;
+    }
+    
+    this.gitService.saveRequest(this.mdDoc.file, this.dir, header, body, this.jekyllProcess)
                    .then(result=>{
                      this.iframeDoc.location.reload(true);
                    })

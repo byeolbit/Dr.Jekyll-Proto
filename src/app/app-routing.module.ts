@@ -9,7 +9,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'repository', component: RepositoryComponent},
   { path: 'editor', component: EditorComponent },
-  { path: '', redirectTo: '/repository', pathMatch: 'full'}
+  { path: '', redirectTo: '/login', pathMatch: 'full'}
 ]
 
 @NgModule({
