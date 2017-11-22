@@ -26,7 +26,7 @@ export class GitService {
     return this.http.post(this.serverUrl+'/write_md', {
       'repo_path': repo_path,
       'file_path': file_path,
-      'file_header': file_header,
+      'header': file_header,
       'body': body
     }).toPromise()
       .then(res => {
