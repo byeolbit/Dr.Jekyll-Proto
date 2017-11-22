@@ -4,15 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { Router } from '@angular/router';
 
-import { AppComponent } from './app.component'
-import { AppRoutingModule } from './app-routing.module'
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 
+import { StartComponent } from './start/start.component';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
 import { RepositoryComponent } from './repository/repository.component';
 import { EditorComponent } from './editor/editor.component';
 import { SideBarComponent } from './editor/sidebar/sidebar.component';
-import { FileBrowserComponent } from './editor/sidebar/file-browser/file-browser.component'
+import { FileBrowserComponent } from './editor/sidebar/file-browser/file-browser.component';
 import { LiveEditorComponent } from './editor/live-editor/live-editor.component';
 
 import { JekyllService } from './jekyll.service';
@@ -31,6 +32,7 @@ import { SafePipe } from './safe.pipe';
   ],
   declarations: [
     AppComponent,
+    StartComponent,
     LoginComponent,
     RepositoryComponent,
     EditorComponent,
