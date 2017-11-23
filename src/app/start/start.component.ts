@@ -35,6 +35,7 @@ export class StartComponent implements OnInit {
     win.setMaximizable(false);
     win.setSize(780,480,true);
     this.preventDragandDrop();
+    this.runHyde();
   };
 
   navigateToLogin() {
@@ -75,6 +76,18 @@ export class StartComponent implements OnInit {
       this.router.navigate(['/editor',{'src' : result.path }]);
       this.jekyllService.passJekyllProcess(result.child);
     }
+  }
+
+  private runHyde(){
+    let appPath = remote.app.getAppPath();
+    let child = this.jekyllService.runHyde(appPath);
+
+    child.stdout.on('data', data => {
+      console.log(data);
+      if(data.toString().indexOf('Running on http://127.0.0.1:5000/') !== -1){
+        console.log('hyde is running')
+      }
+    });
   }
 
   private preventDragandDrop() {
