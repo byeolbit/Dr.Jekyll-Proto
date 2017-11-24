@@ -19,15 +19,11 @@ export class JekyllService {
     return this.jekyll;
   }
 
-  // Fix me : Need error exception for running error
+  // Fix me : Need error handling for running error
   runHyde(path) {
-    // Fix me : Dr.Hyde path have to be under dist. Not on the project path.
-    // So it must be like
-    // cd path && . venv/bin/activate && python manage.py runserver
-    let command = 'cd '+ path +' && cd ../Dr.Hyde && . venv/bin/activate && python manage.py runserver';
-
+    let command = 'cd '+path+'/Dr.Hyde '+
+      '&& . venv/bin/activate && python manage.py runserver';
     this.hyde = cp.exec(command);
-    
     return this.hyde;
   }
 
@@ -48,9 +44,6 @@ export class JekyllService {
   }
 
   getJekyllProcess(): Observable<any> {
-    console.log('observable:');
-    console.log(this.subject.asObservable());
-    console.log(this.jekyll);
     return this.subject.asObservable();
   }
 }
