@@ -3,9 +3,9 @@
     <div class="repository-contents">
         <h1>Select repository</h1>
         <div class="repository-list">
-          <div class="repository" *ngFor="let repo of repoList">
+          <div class="repository" *ngFor="let repo of repoList" (click)="selectRepo($event)">
             <img [src]="icon_repo">
-            <span>{{repo.name}}</span>
+            <span>{{repo}}</span>
           </div>
         </div>
         <div class="load-repository" (click)="loadRepository();" type="submit" name="action">

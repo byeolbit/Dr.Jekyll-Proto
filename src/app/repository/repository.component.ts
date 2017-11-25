@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Input} from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RepositoryService } from './provider/repository.service'
 import { Repository } from './repository'
 import { remote } from 'electron';
@@ -23,8 +23,11 @@ export class RepositoryComponent implements OnInit{
   repoList: Repository[];
   icon_repo = 'assets/images/icon/icon_repo.png';
   repositorySrc;
+  selectedRepo: string;
+  userName: string;
 
   constructor (
+    private route: ActivatedRoute,    
     private router: Router,
     private repositoryService: RepositoryService,
     private jekyllService: JekyllService
@@ -35,31 +38,58 @@ export class RepositoryComponent implements OnInit{
     win.setFullScreenable(false);
     win.setMaximizable(false);
     win.setSize(780,480,true);
-    this.repositoryService.getRepositories()
-                          .then(repository => {
-                            this.repoList = repository;
-                          });
+    let params = this.route.snapshot.params;
+    this.repoList = params.repo_list.split(',');
+    this.userName = params.user;
   }
 
   loadRepository() {
-    let openProject = this.selectDirectory(this.jekyllService);
+    let openProject = this.selectDirectory(
+      this.jekyllService, this.repositoryService,
+      this.selectedRepo, this.userName);
     
-    openProject.then(this.runJekyll)
+    openProject.then(this.cloneRepo)
+               .then(this.runJekyll)
                .then(result => this.navigateToEditor(result));
   }
 
-  private selectDirectory(service) {
+  selectRepo(event) {
+    let target = event.target.innerText.trim();
+    if (target) {
+      this.selectedRepo = target;
+    }
+  }
+
+  private selectDirectory(service:JekyllService,
+                          repoService:RepositoryService,
+                          repo:string, user:string) {
     return new Promise((resolve, rejected)=>{
       let dialog = remote.dialog;
       resolve({
         path: dialog.showOpenDialog({properties: ['openDirectory']}).toString(),
-        service: service
+        repoService: repoService,
+        service: service,
+        repo: repo,
+        user: user
       })
+    });
+  }
+
+  private cloneRepo(recived) {
+    return new Promise ((resolve, rejected)=>{
+      recived.repoService
+             .cloneRepository(recived.user, recived.repo, recived.path)
+             .then(res => {
+                if(res.success){
+                 resolve(recived);
+                }
+             });
     });
   }
   
   private runJekyll(recived) {
     return new Promise ((resolve, rejected)=>{
+      console.log(recived);
       let child = recived.service.runJekyll(recived.path);
 
       child.stdout.on('data', data => {

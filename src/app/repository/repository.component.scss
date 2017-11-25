@@ -55,6 +55,21 @@
   text-align: left;
 }
 
+.repository:hover {
+  background-color:rgb(255, 0, 140);
+  color: #F0F0F0;
+}
+
+.repository:focus {
+  background-color:rgb(255, 0, 140);
+  color: #F0F0F0;
+}
+
+.repository:active {
+  background-color:rgb(255, 0, 140);
+  color: #F0F0F0;
+}
+
 .repository:last-child {
   border-bottom: none;
 }
