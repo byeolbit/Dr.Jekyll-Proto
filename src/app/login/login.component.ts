@@ -37,11 +37,9 @@ export class LoginComponent implements OnInit {
   };
 
   login(user:User) {
-    this.loginService.requestLogin(user)
-                     .then(r => {
-                            console.log(r);
-                            this.result = this.returnResult(r);
-                            this.navigateToRepo(true);
+    this.loginService.requestRepository(user)
+                     .then(res => {
+                            this.navigateToRepo(res, user.name);
                            },
                            error => this.errorMessage = <any>error);
   }
@@ -50,9 +48,16 @@ export class LoginComponent implements OnInit {
     return data.result;
   }
 
-  private navigateToRepo(result:Boolean) {
-    if (result) {
-      this.router.navigate(['/repository']);
+  private getRepoList(repoList){
+    return repoList.map(repo=>repo.name);
+  }
+
+  private navigateToRepo(res:any, user:string) {
+    if (res.success) {
+      this.router.navigate(['/repository',{
+        'repo_list' : this.getRepoList(res.repo_list),
+        'user': user
+      }]);
     }
   }
 

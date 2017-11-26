@@ -6,16 +6,17 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class LoginService {
-  private serverUrl: string = 'http://59.27.101.61:3000/login';
+  private serverUrl: string = 'http://127.0.0.1:5000/api/repository';
 
   constructor (private http: Http) {}
 
-  requestLogin (user:User): Promise<any> {
+  requestRepository (user:User): Promise<any> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.serverUrl, { 'repo_url':'https://github.com/boolsajo/PyGithub','repo_path':'test_clone' }, options)
+    return this.http.post(this.serverUrl,
+      { 'user': user.name, 'password':user.password }, options)
                     .toPromise()
-                    .then(this.extractData)
+                    .then(res=>this.extractData(res))
                     .catch(this.handleError);
   }
 

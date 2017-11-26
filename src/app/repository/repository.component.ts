@@ -64,9 +64,9 @@ export class RepositoryComponent implements OnInit{
     }
   }
 
-  private selectDirectory(service:JekyllService,
-                          repoService:RepositoryService,
-                          repo:string, user:string): Promise<any> {
+  private selectDirectory(service: JekyllService,
+                          repoService: RepositoryService,
+                          repo: string, user: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const dialog = remote.dialog;
       const directory = dialog.showOpenDialog({properties: ['openDirectory']});
@@ -99,6 +99,7 @@ export class RepositoryComponent implements OnInit{
   
   private runJekyll(recived) {
     return new Promise ((resolve, rejected)=>{
+      console.log(recived);
       let child = recived.service.runJekyll(recived.path);
 
       child.stdout.on('data', data => {
