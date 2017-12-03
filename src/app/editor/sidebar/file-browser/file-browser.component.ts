@@ -213,12 +213,15 @@ export class FileBrowserComponent implements OnInit {
     
     // Overide date with front matter
     let dateVariable = header.find(variable => variable.key === 'date');
-    if (dateVariable !== undefined){
-      date = dateVariable.value.match(/\d{4}-\d{2}-\d{2}/)[0].split('-');
+    if(dateVariable) {
+      let dateValue = dateVariable.value;
+      templateVariable['year'] =
+        dateValue.getFullYear().toString();
+      templateVariable['month'] =
+        (dateValue.getMonth()+101).toString().substr(1);
+      templateVariable['day'] =
+        (dateValue.getDate()+100).toString().substr(1);
     }
-    templateVariable['year'] = date[0];
-    templateVariable['month'] = date[1];
-    templateVariable['day'] = date[2];
 
     // Overide title with front matter
     /*
@@ -287,11 +290,14 @@ export class FileBrowserComponent implements OnInit {
         let variable;
         if (isVariable !== null){
           variable = line.split(isVariable[0]);
+          if (variable[0] === 'date') {
+            variable[1] = new Date(variable[1]);
+          }
           headerVariable.push(new HeaderVariable(variable[0],variable[1]));
         }
       }
     });
-    
+
     return headerVariable;
   }
 }
