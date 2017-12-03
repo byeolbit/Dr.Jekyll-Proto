@@ -3,6 +3,7 @@ import { Component, ViewChild, ElementRef,
 import { Router } from '@angular/router';
 import { GitService } from './provider/git.service';
 import { JekyllService } from '../../jekyll.service';
+import { ModalService } from '../modal.service'
 import { Subscription } from 'rxjs/Subscription';
 
 
@@ -48,6 +49,7 @@ export class LiveEditorComponent implements OnInit, OnChanges {
 
   constructor ( private router: Router,
                 private gitService: GitService,
+                private modalService: ModalService,
                 private jekyllService: JekyllService ){
                  this.subscription = this.jekyllService.getJekyllProcess().subscribe(ps=>{console.log(ps); this.jekyllProcess = ps;});
                 };
@@ -60,6 +62,10 @@ export class LiveEditorComponent implements OnInit, OnChanges {
         this.pagePath = this.mdDoc.path;
       }
     }
+  }
+
+  openHeader(){
+    this.modalService.open(this.mdDoc.header, 'header-modal');
   }
 
   onLoad() {

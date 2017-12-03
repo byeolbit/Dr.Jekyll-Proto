@@ -57,10 +57,10 @@ export class RepositoryComponent implements OnInit{
     });
   }
 
-  selectRepo(event: Event) {
-    const target = event.target.innerText.trim();
-    if (target) {
-      this.selectedRepo = target;
+  selectRepo(event) {
+    const targetEl:string = event.target.innerText.trim();
+    if (targetEl) {
+      this.selectedRepo = targetEl;
     }
   }
 

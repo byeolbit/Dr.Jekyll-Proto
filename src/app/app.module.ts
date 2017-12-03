@@ -15,6 +15,8 @@ import { EditorComponent } from './editor/editor.component';
 import { SideBarComponent } from './editor/sidebar/sidebar.component';
 import { FileBrowserComponent } from './editor/sidebar/file-browser/file-browser.component';
 import { LiveEditorComponent } from './editor/live-editor/live-editor.component';
+import { ModalService } from './editor/modal.service';
+import { HeaderComponent } from './editor/header-editor/header-editor.component'
 
 import { JekyllService } from './jekyll.service';
 
@@ -40,9 +42,11 @@ import { SafePipe } from './safe.pipe';
     FileBrowserComponent,
     LiveEditorComponent,
     SafePipe,
+    HeaderComponent
   ],
   providers: [
-    JekyllService
+    JekyllService,
+    ModalService
   ],
   bootstrap: [AppComponent]
 })
