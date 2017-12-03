@@ -39,6 +39,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // open modal
     open(header): void {
       this.header = header;
+      this.header.find(variable => {
+        if(variable.key === 'date'){
+          let date =variable.value;
+          let y = date.getFullYear().toString();
+          let m = (date.getMonth()+101).toString().substr(1);
+          let d = (date.getDate()+100).toString().substr(1);
+          variable.date = y+'-'+m+'-'+d;
+        }}
+      );
+
       this.element.style.display = 'block';
       document.body.classList.add('modal-open');
     }

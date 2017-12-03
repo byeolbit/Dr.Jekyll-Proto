@@ -8,11 +8,11 @@
           <input class = "item-value" type="text" value="{{item.value}}" />
         </ng-template>
         <ng-template #date >
-          <input class = "item-value" type="date" value="{{item.value}}" />
+          <input class = "item-value" type="date" value="{{item.date}}" />
         </ng-template>
       </div>
-    <button (click)="closeModal('custom-modal-1');">Save</button>
-    <button (click)="closeModal('custom-modal-1');">Cancel</button>
+    <button (click)="close();">Save</button>
+    <button (click)="close();">Cancel</button>
   </div>
 </div>
 <div class="modal-background"></div>
