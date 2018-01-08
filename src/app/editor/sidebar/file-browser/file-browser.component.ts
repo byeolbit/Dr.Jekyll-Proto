@@ -69,7 +69,7 @@ export class FileBrowserComponent implements OnInit {
   private makeDirectoryTree(dir, funcDone) {
     let res = [];
 
-    fs.readdir(dir, (err,files)=> {
+    fs.readdir(dir, (err,files) => {
       if (err) throw err;
 
       let isEmpty = files.length;
@@ -80,11 +80,11 @@ export class FileBrowserComponent implements OnInit {
 
       for (let file of files) {
         file = path.resolve(dir, file);
-        fs.stat(file, (err, stats)=> {
+        fs.stat(file, (err, stats) => {
           if (stats && 
               stats.isDirectory() && 
               path.basename(file)[0]!=='.') {
-            this.makeDirectoryTree(file, (err, result)=>{
+            this.makeDirectoryTree(file, (err, result) => {
               res.push({
                 id: this.index++,
                 name: path.basename(file),
@@ -134,7 +134,7 @@ export class FileBrowserComponent implements OnInit {
       variable =>'permalink' === variable.key);
     if (permalinkVariable === undefined) {
       let defaultPermalink = this.getDefaultPermalink(this.dir);
-      if (defaultPermalink === undefined){
+      if (defaultPermalink === undefined) {
         permalink = this.getPermalink(file, header,'date');
       } else {
       permalink = this.getPermalink(file, header, defaultPermalink);
