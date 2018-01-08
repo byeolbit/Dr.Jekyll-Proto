@@ -53,7 +53,7 @@ export class FileBrowserComponent implements OnInit {
   private tree: TreeComponent;
 
   ngOnInit(){
-    this.makeDirectoryTree(this.dir, (err, res)=>{
+    this.makeDirectoryTree(this.dir, (err, res) => {
       this.nodes = res;
       this.tree.treeModel.update();
     });
@@ -134,7 +134,7 @@ export class FileBrowserComponent implements OnInit {
       variable =>'permalink' === variable.key);
     if (permalinkVariable === undefined) {
       let defaultPermalink = this.getDefaultPermalink(this.dir);
-      if( defaultPermalink === undefined ){
+      if (defaultPermalink === undefined){
         permalink = this.getPermalink(file, header,'date');
       } else {
       permalink = this.getPermalink(file, header, defaultPermalink);
@@ -213,7 +213,7 @@ export class FileBrowserComponent implements OnInit {
     
     // Overide date with front matter
     let dateVariable = header.find(variable => variable.key === 'date');
-    if(dateVariable) {
+    if (dateVariable) {
       let dateValue = dateVariable.value;
       templateVariable['year'] =
         dateValue.getFullYear().toString();
@@ -239,7 +239,7 @@ export class FileBrowserComponent implements OnInit {
         categoriesVariable.value.split(' ').join('/');
     }
 
-    if (permalink === undefined){
+    if (permalink === undefined) {
       permalink = preset['date'];
     } else if (permalink.match(/date|pretty|ordinal|none/) !== null) {
       permalink = preset[permalink];
@@ -253,9 +253,9 @@ export class FileBrowserComponent implements OnInit {
     }
 
     if (permalink.match(/\S*.html/) === null) {
-      if( permalink.slice(-1) === '/')
+      if (permalink.slice(-1) === '/') {
         permalink = permalink.substr(0,permalink.length-1);
-      
+      }
       permalink = permalink+'.html';
     }
     return permalink;
@@ -284,11 +284,11 @@ export class FileBrowserComponent implements OnInit {
     }
 
     // return header variables
-    data.forEach( line =>{
+    data.forEach(line => {
       if (line.match(/# \S*/) === null) {
         let isVariable = line.match(/:\s*/);
         let variable;
-        if (isVariable !== null){
+        if (isVariable !== null) {
           variable = line.split(isVariable[0]);
           if (variable[0] === 'date') {
             variable[1] = new Date(variable[1]);
